@@ -23,10 +23,13 @@ db.connect((err) => {
 });
 
 app.post('/api/signup', (req, res) => {
-    const sql = "INSERT INTO users (`name`, `email`, `password`) VALUES (?)";
+    const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
     const values = [req.body.name, req.body.email, req.body.password];
-    db.query(sql, [values], (err, data) => {
-        if(err) return res.json({status: "Error", error: err});
+    db.query(sql, values, (err, data) => {
+        if(err) {
+            console.log("Signup DB Error:", err);
+            return res.json({status: "Error", error: err.message});
+        }
         return res.json({status: "Success"});
     });
 });
