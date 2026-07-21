@@ -13,7 +13,7 @@ const dbConfig = {
   password: "AVNS_HuC9umr1Dnap-iduG_6",
   database: "defaultdb",
   ssl: {
-    rejectUnauthorized: true
+    rejectUnauthorized: false
   }
 };
 
