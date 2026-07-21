@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './App.css'; 
 
 function App() {
-  // --- States ---
   const [user, setUser] = useState(null); 
   const [isSignup, setIsSignup] = useState(false); 
   const [authForm, setAuthForm] = useState({ name: '', email: '', password: '' });
@@ -11,10 +10,8 @@ function App() {
   const [cartItems, setCartItems] = useState([]); 
   const [isCartOpen, setIsCartOpen] = useState(false);
   
-  // --- POPUP STATE ---
   const [selectedBook, setSelectedBook] = useState(null); 
 
-  // --- ORDER FORM STATE ---
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [orderForm, setOrderForm] = useState({ name: '', email: '', address: '', phone: '' }); 
   
@@ -24,39 +21,33 @@ function App() {
   const [addedBookId, setAddedBookId] = useState(null);
   const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
 
-  // --- 1. BACKEND SE DATA MANGWANA ---
   useEffect(() => {
-    fetch('http://localhost:8081/books')
+    fetch('/api/books')
       .then(res => res.json())
       .then(data => setBooks(data))
       .catch(err => console.log(err));
   }, []);
 
-  // --- AUTH FUNCTIONS ---
   const handleAuthChange = (e) => setAuthForm({ ...authForm, [e.target.name]: e.target.value });
 
   const handleAuthSubmit = (e) => {
     e.preventDefault();
     
-    // --- NEW: PASSWORD VALIDATION LOGIC ---
     if (isSignup) {
         const pass = authForm.password;
-        // Check 1: Length 8 se kam na ho
         if (pass.length < 8) {
             return alert("Password must be at least 8 characters long!");
         }
-        // Check 2: Special Character Zaroor ho (!, @, #, etc.)
         const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
         if (!specialCharRegex.test(pass)) {
             return alert("Password must contain at least one special character (e.g., !, @, #, $)");
         }
     }
-    // --------------------------------------
 
     const endpoint = isSignup ? '/signup' : '/login';
     const bodyData = isSignup ? authForm : {email: authForm.email, password: authForm.password};
 
-    fetch(`http://localhost:8081${endpoint}`, {
+    fetch(`/api${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bodyData)
@@ -77,7 +68,6 @@ function App() {
     });
   };
 
-  // --- CART FUNCTIONS ---
   const addToCart = (book) => {
     const exist = cartItems.find((x) => x.id === book.id);
     if (exist) {
@@ -112,7 +102,6 @@ function App() {
   
   const calculateTotal = () => cartItems.reduce((total, item) => total + (parseFloat(item.price) * item.quantity), 0).toFixed(2);
   
-  // --- PLACE ORDER FUNCTION ---
   const handlePlaceOrder = (e) => {
       e.preventDefault();
       const orderData = {
@@ -124,7 +113,7 @@ function App() {
           items: cartItems.map(item => `${item.title} (x${item.quantity})`) 
       };
 
-      fetch('http://localhost:8081/place-order', {
+      fetch('/api/place-order', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(orderData)
@@ -163,7 +152,6 @@ function App() {
            book.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  // --- LOGIN SCREEN ---
   if (!user) {
     return (
       <div className="App login-container">
@@ -187,13 +175,11 @@ function App() {
     );
   }
 
-  // --- MAIN WEBSITE ---
   return (
     <div className="App">
       <div className="bg-3d"><span></span><span></span><span></span><span></span></div>
       <div id="toast" className={showToast ? "show" : ""}>Item Added to Cart! 🛒</div>
 
-      {/* --- MODAL / POPUP --- */}
       {selectedBook && (
         <div className="modal-overlay" onClick={() => setSelectedBook(null)}>
           <div className="modal-content fade-in-up" onClick={(e) => e.stopPropagation()}>
@@ -218,7 +204,6 @@ function App() {
         </div>
       )}
 
-      {/* --- CART SIDEBAR --- */}
       <div className={`cart-sidebar ${isCartOpen ? 'open' : ''}`}>
         <div className="cart-header">
             {showCheckoutForm ? (
@@ -277,7 +262,6 @@ function App() {
         )}
       </div>
 
-      {/* HEADER */}
       <header>
         <div className="navbar">
           <a href="#home" className="logo"><i className="fas fa-book-open"></i> Books<span>World</span></a>
@@ -289,14 +273,12 @@ function App() {
         </div>
       </header>
 
-      {/* HERO */}
       <section className="hero" id="home">
         <div className="hero-content fade-in-up">
           <h2>Welcome, {user.name}!</h2><p>Premium books collection.</p><a href="#shop" className="hero-btn">Browse Books</a>
         </div>
       </section>
 
-      {/* SHOP */}
       <section className="container" id="shop">
         <h2 className="section-title">Exclusive Collection</h2>
         <div className="controls fade-in-scroll">
@@ -312,7 +294,6 @@ function App() {
                     <span className="category-tag">{book.category}</span>
                     <h3>{book.title}</h3>
                     
-                    {/* BUTTON TO OPEN POPUP */}
                     <button className="view-btn" onClick={() => setSelectedBook(book)}><i className="fas fa-eye"></i> Quick View</button>
 
                     <p className="price">${book.price}</p>
@@ -322,7 +303,6 @@ function App() {
         )}
       </section>
 
-      {/* ABOUT */}
       <section className="info-section fade-in-scroll" id="about">
         <div className="container">
           <h2 className="section-title">Who We Are</h2>
@@ -345,7 +325,6 @@ function App() {
         </div>
       </section>
 
-      {/* CONTACT */}
       <section className="container fade-in-scroll" id="contact" style={{marginBottom: '80px'}}>
         <h2 className="section-title">Let's Connect</h2>
         <div className="info-content">
