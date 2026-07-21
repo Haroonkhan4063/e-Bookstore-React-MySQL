@@ -6,12 +6,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Database Connection
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'bookstore_db'
+  host: "mysql-30e28c96-haroon-bookstore.j.aivencloud.com",
+  port: 16019,
+  user: "avnadmin",
+  password: "AVNS_HuC9umr1Dnap-iduG_6",
+  database: "defaultdb",
+  ssl: {
+    rejectUnauthorized: true
+  }
 });
 
 db.connect((err) => {
@@ -19,7 +22,6 @@ db.connect((err) => {
     else console.log('✅ MySQL Connected!');
 });
 
-// --- 1. SIGNUP API ---
 app.post('/signup', (req, res) => {
     const sql = "INSERT INTO users (`name`, `email`, `password`) VALUES (?)";
     const values = [req.body.name, req.body.email, req.body.password];
@@ -29,7 +31,6 @@ app.post('/signup', (req, res) => {
     });
 });
 
-// --- 2. LOGIN API ---
 app.post('/login', (req, res) => {
     const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
     db.query(sql, [req.body.email, req.body.password], (err, data) => {
@@ -39,7 +40,6 @@ app.post('/login', (req, res) => {
     });
 });
 
-// --- 3. GET BOOKS API ---
 app.get('/books', (req, res) => {
     const sql = "SELECT * FROM books";
     db.query(sql, (err, data) => {
@@ -48,9 +48,7 @@ app.get('/books', (req, res) => {
     });
 });
 
-// --- 4. PLACE ORDER API (NEW) ---
 app.post('/place-order', (req, res) => {
-    // Items ko JSON string bana kar save karenge
     const itemsString = JSON.stringify(req.body.items); 
     
     const sql = "INSERT INTO orders (`customer_name`, `email`, `address`, `phone`, `total_price`, `items`) VALUES (?)";
