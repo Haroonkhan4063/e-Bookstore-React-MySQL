@@ -283,7 +283,7 @@ function App() {
           <a href="#home" className="logo"><i className="fas fa-book-open"></i> Books<span>World</span></a>
           <nav className="nav-links">
             <a href="#home">Home</a><a href="#shop">Collection</a><a href="#about">About</a><a href="#contact">Contact</a>
-            <a onClick={() => setUser(null)} style={{color:'#e74c3c', cursor:'pointer', fontWeight:'bold'}}>Logout <i className="fas fa-sign-out-alt"></i></a> 
+            <a href="#!" onClick={() => setUser(null)} style={{color:'#e74c3c', cursor:'pointer', fontWeight:'bold'}}>Logout <i className="fas fa-sign-out-alt"></i></a> 
           </nav>
           <div className="cart-icon" onClick={toggleCart}><i className="fas fa-shopping-cart"></i><span id="cart-count">{cartItems.length}</span></div>
         </div>
