@@ -22,7 +22,7 @@ db.connect((err) => {
     else console.log('✅ MySQL Connected!');
 });
 
-app.post('/signup', (req, res) => {
+app.post('/api/signup', (req, res) => {
     const sql = "INSERT INTO users (`name`, `email`, `password`) VALUES (?)";
     const values = [req.body.name, req.body.email, req.body.password];
     db.query(sql, [values], (err, data) => {
@@ -31,7 +31,7 @@ app.post('/signup', (req, res) => {
     });
 });
 
-app.post('/login', (req, res) => {
+app.post('/api/login', (req, res) => {
     const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
     db.query(sql, [req.body.email, req.body.password], (err, data) => {
         if(err) return res.json({status: "Error"});
@@ -40,7 +40,7 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.get('/books', (req, res) => {
+app.get('/api/books', (req, res) => {
     const sql = "SELECT * FROM books";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
@@ -48,7 +48,7 @@ app.get('/books', (req, res) => {
     });
 });
 
-app.post('/place-order', (req, res) => {
+app.post('/api/place-order', (req, res) => {
     const itemsString = JSON.stringify(req.body.items); 
     
     const sql = "INSERT INTO orders (`customer_name`, `email`, `address`, `phone`, `total_price`, `items`) VALUES (?)";
