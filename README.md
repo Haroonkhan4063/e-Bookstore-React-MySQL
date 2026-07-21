@@ -2,6 +2,8 @@
 
 Welcome to **Books World**, a modern and responsive Full-Stack E-Commerce web application built using the MERN stack architecture (with MySQL as the database). This platform allows users to browse premium books, view details, manage their shopping cart, and place orders seamlessly.
 
+🔗 **Live Demo:** [https://e-bookstore-react-my-sql.vercel.app/](https://e-bookstore-react-my-sql.vercel.app/)
+
 ---
 
 ## ✨ Key Features
@@ -44,15 +46,14 @@ Follow these steps to run the project locally on your machine.
 ### 1. Database Setup (MySQL)
 1. Open your MySQL client (e.g., XAMPP/MySQL Workbench).
 2. Create a new database named `bookstore_db`.
-3. Run the SQL queries (provided in the backend folder or database file) to create the `users`, `books`, and `orders` tables.
+3. Run the SQL queries to create the `users`, `books`, and `orders` tables.
 4. Insert the sample book data into the `books` table.
 
 ### 2. Backend Setup
 1. Open your terminal and navigate to the backend folder:
    ```bash
    cd backend
-
-   Install the required dependencies:
+Install the required dependencies:
 
 Bash
 npm install
@@ -60,10 +61,10 @@ Start the Node.js server:
 
 Bash
 node server.js
-(The server should run on http://localhost:8081)
+(The server will run on http://localhost:8081)
 
 3. Frontend Setup
-Open a new terminal and navigate to the frontend folder:
+Open a new terminal and navigate to the main directory:
 
 Bash
 cd frontend
@@ -80,19 +81,17 @@ npm start
 📂 Project Structure
 Plaintext
 Books-World/
-├── backend/               # Node.js & Express server files
-│   ├── server.js          # Main API endpoints and DB connection
-│   └── package.json       
-├── frontend/              # React.js application
-│   ├── public/            # Static assets and images
-│   ├── src/               
-│   │   ├── App.js         # Main React Component & Logic
-│   │   ├── App.css        # Custom Styling & Animations
-│   │   └── index.js       # App Entry Point
-│   └── package.json
-├── .gitignore             # Ignored files for GitHub
-└── README.md              # Project Documentation
-
-
+├── backend/             # Node.js & Express server files
+│   ├── server.js        # Main API endpoints and DB connection
+│   └── package.json     
+├── public/              # Static assets and images
+├── src/                 
+│   ├── App.js           # Main React Component & Logic
+│   ├── App.css          # Custom Styling & Animations
+│   └── index.js         # App Entry Point
+├── .gitignore           # Ignored files for GitHub
+├── package.json         
+├── vercel.json          # Vercel deployment configuration
+└── README.md            # Project Documentation
 👨‍💻 Developer
-Developed by  Muhammad Haroon Khan  as a Full-Stack Web Development Project.
+Developed by Muhammad Haroon Khan as a Full-Stack Web Development Project.
