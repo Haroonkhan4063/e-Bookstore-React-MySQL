@@ -75,3 +75,5 @@ app.post('/place-order', (req, res) => {
 app.listen(8081, () => {
     console.log("🚀 Server running on 8081");
 });
+
+module.exports = app;
