@@ -146,11 +146,11 @@ function App() {
     setContactForm({ name: '', email: '', message: '' });
   };
 
-  const filteredBooks = books.filter(book => {
+ const filteredBooks = Array.isArray(books) ? books.filter(book => {
     const cat = book.category || ''; 
     return (filter === 'All' || cat.toLowerCase() === filter.toLowerCase()) && 
            book.title.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  }) : [];
 
   if (!user) {
     return (
