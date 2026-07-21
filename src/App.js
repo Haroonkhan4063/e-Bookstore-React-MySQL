@@ -63,9 +63,10 @@ function App() {
                 alert(`Welcome back, ${data.user.name}!`);
             }
         } else {
-            alert("Error: " + (data.error?.sqlMessage || "Invalid Credentials"));
+            alert("Server Response: " + JSON.stringify(data));
         }
-    });
+    })
+    .catch(err => alert("Network Error: " + err));
   };
 
   const addToCart = (book) => {
@@ -127,7 +128,7 @@ function App() {
               setIsCartOpen(false); 
               setOrderForm({ name: '', email: '', address: '', phone: '' }); 
           } else {
-              alert("Order Failed: " + data.error);
+              alert("Order Failed: " + JSON.stringify(data));
           }
       })
       .catch(err => alert("Server Error"));
@@ -146,7 +147,7 @@ function App() {
     setContactForm({ name: '', email: '', message: '' });
   };
 
- const filteredBooks = Array.isArray(books) ? books.filter(book => {
+  const filteredBooks = Array.isArray(books) ? books.filter(book => {
     const cat = book.category || ''; 
     return (filter === 'All' || cat.toLowerCase() === filter.toLowerCase()) && 
            book.title.toLowerCase().includes(searchTerm.toLowerCase());
